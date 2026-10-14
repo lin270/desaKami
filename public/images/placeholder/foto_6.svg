@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Foto contoh Desa Mondokan">
+  <rect width="1200" height="800" fill="#5a4a6b"/>
+  <path d="M0 620 Q300 520 600 600 T1200 580 V800 H0 Z" fill="#000" fill-opacity=".12"/>
+  <path d="M0 700 Q350 620 700 690 T1200 670 V800 H0 Z" fill="#000" fill-opacity=".12"/>
+  <g fill="#fff" fill-opacity=".9" font-family="Georgia,serif" text-anchor="middle">
+    <text x="600" y="380" font-size="64">DESA MONDOKAN</text>
+    <text x="600" y="440" font-size="28" fill-opacity=".75">Foto contoh - ganti dengan foto asli</text>
+  </g>
+</svg>

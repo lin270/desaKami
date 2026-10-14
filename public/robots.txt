@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin
+Disallow: /search
+
+# Setelah website online, ganti dengan domain asli lalu hapus tanda # di bawah:
+# Sitemap: https://domain-desa-anda.id/sitemap.xml
