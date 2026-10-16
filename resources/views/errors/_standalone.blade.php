@@ -7,11 +7,11 @@
     <title>{{ $judul }} - Desa Klepu</title>
     <style>
         body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1.5rem;
-               background:#faf8f3; color:#1b1f1d; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; text-align:center; }
-        .kode { font:700 clamp(4rem,18vw,7rem)/1 Georgia,serif; color:#c8962e; margin:0 0 .5rem; }
-        h1 { font-family:Georgia,serif; color:#1f5d3a; margin:0 0 .75rem; }
-        p { margin:0 0 1.25rem; color:#5f6762; max-width:34rem; }
-        a { display:inline-block; padding:.55rem 1.1rem; background:#1f5d3a; color:#fff; border-radius:6px; font-weight:600; text-decoration:none; }
+               background:#F5F1E8; color:#292B27; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; text-align:center; }
+        .kode { font:500 clamp(4rem,18vw,7rem)/1 "Iowan Old Style","Palatino Linotype",Georgia,serif; color:#87907B; margin:0 0 .5rem; }
+        h1 { font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-weight:500; color:#293B30; margin:0 0 .75rem; }
+        p { margin:0 0 1.25rem; color:#5b6354; max-width:34rem; }
+        a { display:inline-block; padding:.55rem 1.1rem; background:#293B30; color:#fff; border-radius:2px; font-weight:600; text-decoration:none; }
     </style>
 </head>
 <body>

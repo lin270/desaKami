@@ -18,8 +18,8 @@ class SiteComposer
     {
         if (self::$data === null) {
             $defaults = [
-                'site_name' => 'DESA MONDOKAN',
-                'site_tagline' => 'Website Resmi Desa Mondokan',
+                'site_name' => 'DESA KLEPU',
+                'site_tagline' => 'Website Resmi Desa Klepu',
             ];
 
             // Pengaturan yang kosong diabaikan agar nilai default tetap dipakai

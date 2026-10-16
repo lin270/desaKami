@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\Event;
+use App\Models\Aspiration;
 use App\Models\Gallery;
+use App\Models\LostItem;
 use App\Models\Post;
+use App\Models\VillageLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -61,6 +65,11 @@ class DashboardController extends Controller
             'totalEvents' => Event::count(),
             'totalGalleries' => Gallery::count(),
             'totalViews' => (int) Post::sum('views'),
+            // Dihitung dari database; lokasi dilewati bila migration peta belum dijalankan
+            'totalLocations' => Schema::hasTable('village_locations') ? VillageLocation::count() : null,
+            'pendingAspirations' => Schema::hasTable('aspirations') ? Aspiration::pending()->count() : null,
+            'activeLostItems' => LostItem::active()->count(),
+            'upcomingEvents' => Event::published()->upcoming()->count(),
             'recentPosts' => $recentPosts,
             'activity' => $activity,
         ]);

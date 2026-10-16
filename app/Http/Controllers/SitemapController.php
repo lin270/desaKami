@@ -32,6 +32,7 @@ class SitemapController extends Controller
                 ['/galeri', '0.6', 'weekly'],
                 ['/potensi', '0.7', 'monthly'],
                 ['/barang-hilang', '0.6', 'daily'],
+                ['/aspirasi', '0.5', 'daily'],
                 ['/apbdes', '0.7', 'monthly'],
             ] as [$path, $priority, $freq]) {
                 $rows[] = [url($path), null, $freq, $priority];

@@ -16,7 +16,7 @@ class Budget extends Model
         return $query->where('status', 'published')->whereNotNull('file');
     }
 
-    /** Alamat unduhan publik (lewat controller, nama file rapi: APBDes-Desa-Mondokan-2026.pdf). */
+    /** Alamat unduhan publik (lewat controller, nama file rapi: APBDes-Desa-Klepu-2026.pdf). */
     protected function downloadUrl(): Attribute
     {
         return Attribute::get(fn () => url('/apbdes/'.$this->year.'/unduh'));
@@ -24,7 +24,7 @@ class Budget extends Model
 
     protected function downloadName(): Attribute
     {
-        return Attribute::get(fn () => 'APBDes-Desa-Mondokan-'.$this->year.'.pdf');
+        return Attribute::get(fn () => 'APBDes-Desa-Klepu-'.$this->year.'.pdf');
     }
 
     /** "1,2 MB" / "340 KB" */

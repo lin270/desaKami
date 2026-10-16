@@ -9,13 +9,13 @@ class SettingSeeder extends Seeder
 {
     public function run(): void
     {
-        // DATA CONTOH - ganti lewat menu Pengaturan di panel admin.
+        // Identitas dasar. Alamat, telepon, dan email sengaja dikosongkan: isi data resmi lewat menu Pengaturan di panel admin.
         $settings = [
-            'site_name' => 'DESA MONDOKAN',
-            'site_tagline' => 'Website Resmi Desa Mondokan',
-            'address' => 'Alamat kantor Desa Mondokan (isi alamat resmi di Pengaturan)',
-            'phone' => '08xx-xxxx-xxxx',
-            'email' => 'info@desamondokan.test',
+            'site_name' => 'DESA KLEPU',
+            'site_tagline' => 'Website Resmi Desa Klepu',
+            'address' => '',
+            'phone' => '',
+            'email' => '',
             'services_hours' => 'Senin - Jumat, 08.00 - 15.00 WIB',
             'facebook' => '',
             'instagram' => '',

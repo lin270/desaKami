@@ -24,11 +24,13 @@ class SecurityHeaders
         }
 
         if (config('security.csp')) {
+            // Leaflet (halaman Peta Desa) dimuat dari unpkg.com; tile peta dari OpenStreetMap.
+            $isMap = $request->is('peta-desa');
             $headers->set('Content-Security-Policy', implode('; ', [
                 "default-src 'self'",
-                "script-src 'self'",
-                "style-src 'self' 'unsafe-inline'", // beberapa style="" inline di Blade
-                "img-src 'self' data: blob:",
+                $isMap ? "script-src 'self' https://unpkg.com" : "script-src 'self'",
+                $isMap ? "style-src 'self' 'unsafe-inline' https://unpkg.com" : "style-src 'self' 'unsafe-inline'", // beberapa style="" inline di Blade
+                $isMap ? "img-src 'self' data: blob: https://tile.openstreetmap.org https://unpkg.com" : "img-src 'self' data: blob:",
                 "font-src 'self'",
                 "connect-src 'self'",
                 "object-src 'none'",

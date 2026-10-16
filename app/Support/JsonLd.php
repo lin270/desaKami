@@ -29,7 +29,7 @@ class JsonLd
         $org = [
             '@context' => 'https://schema.org',
             '@type' => 'GovernmentOrganization',
-            'name' => $site['site_name'] ?? 'Desa Mondokan',
+            'name' => $site['site_name'] ?? 'Desa Klepu',
             'url' => url('/'),
             'logo' => $logoUrl,
             'address' => $site['address'] ?? null,
@@ -41,7 +41,7 @@ class JsonLd
         $website = [
             '@context' => 'https://schema.org',
             '@type' => 'WebSite',
-            'name' => $site['site_name'] ?? 'Desa Mondokan',
+            'name' => $site['site_name'] ?? 'Desa Klepu',
             'url' => url('/'),
             'inLanguage' => 'id',
             'potentialAction' => [
@@ -71,7 +71,7 @@ class JsonLd
             'author' => ['@type' => 'Person', 'name' => $post->author->name],
             'publisher' => [
                 '@type' => 'Organization',
-                'name' => $site['site_name'] ?? 'Desa Mondokan',
+                'name' => $site['site_name'] ?? 'Desa Klepu',
                 'logo' => $logoUrl ? ['@type' => 'ImageObject', 'url' => $logoUrl] : null,
             ],
         ]);

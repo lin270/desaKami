@@ -16,21 +16,21 @@ class PostSeeder extends Seeder
 
         // [judul, kategori, ringkasan] - SEMUA KONTEN CONTOH, ganti lewat panel admin.
         $items = [
-            ['Pemerintah Desa Mondokan Gelar Musyawarah Pembangunan', 'Pembangunan', 'Perangkat desa dan perwakilan warga berkumpul membahas prioritas pembangunan desa untuk periode mendatang.'],
-            ['Warga Mondokan Kerja Bakti Bersihkan Saluran Irigasi', 'Kegiatan', 'Puluhan warga bergotong royong membersihkan saluran air agar aliran ke lahan pertanian tetap lancar.'],
+            ['Pemerintah Desa Klepu Gelar Musyawarah Pembangunan', 'Pembangunan', 'Perangkat desa dan perwakilan warga berkumpul membahas prioritas pembangunan desa untuk periode mendatang.'],
+            ['Warga Klepu Kerja Bakti Bersihkan Saluran Irigasi', 'Kegiatan', 'Puluhan warga bergotong royong membersihkan saluran air agar aliran ke lahan pertanian tetap lancar.'],
             ['Posyandu Balita Rutin Digelar Setiap Bulan', 'Kesehatan', 'Kegiatan penimbangan dan pemantauan tumbuh kembang balita berjalan rutin dengan dukungan kader desa.'],
             ['Pelayanan Administrasi Desa Kini Lebih Tertib dan Cepat', 'Pemerintahan', 'Kantor desa merapikan alur pelayanan agar warga lebih mudah mengurus surat dan dokumen.'],
-            ['UMKM Mondokan Dorong Produk Lokal Masuk Pasar Digital', 'Ekonomi', 'Pelaku usaha kecil di desa mulai memanfaatkan media digital untuk memperkenalkan produk unggulan.'],
+            ['UMKM Klepu Dorong Produk Lokal Masuk Pasar Digital', 'Ekonomi', 'Pelaku usaha kecil di desa mulai memanfaatkan media digital untuk memperkenalkan produk unggulan.'],
             ['Pelatihan Kelompok Tani untuk Meningkatkan Hasil Panen', 'Ekonomi', 'Kelompok tani mengikuti pelatihan pengelolaan lahan dan pemupukan yang lebih efisien.'],
             ['Pembangunan Jalan Lingkungan Memasuki Tahap Pengerjaan', 'Pembangunan', 'Pengerjaan jalan lingkungan dimulai setelah melalui tahap perencanaan bersama warga.'],
             ['Sosialisasi Pencegahan Demam Berdarah di Lingkungan Desa', 'Kesehatan', 'Warga diajak menjaga kebersihan lingkungan dan rutin menguras tempat penampungan air.'],
             ['Perpustakaan Desa Buka Kegiatan Literasi Anak', 'Pendidikan', 'Anak-anak desa diajak membaca dan bercerita bersama dalam kegiatan literasi akhir pekan.'],
-            ['Karang Taruna Mondokan Gelar Olahraga Antar Dusun', 'Masyarakat', 'Pemuda dari berbagai dusun berkumpul dalam pertandingan persahabatan yang berlangsung meriah.'],
+            ['Karang Taruna Klepu Gelar Olahraga Antar Dusun', 'Masyarakat', 'Pemuda dari berbagai dusun berkumpul dalam pertandingan persahabatan yang berlangsung meriah.'],
             ['Jadwal Layanan Kantor Desa Selama Bulan Ini', 'Pengumuman', 'Pemerintah desa menginformasikan jadwal dan jam pelayanan kantor desa untuk warga.'],
             ['Penyaluran Bantuan Dilakukan Secara Terbuka dan Tertib', 'Desa', 'Pemerintah desa menekankan pentingnya data yang jelas dan proses penyaluran yang terbuka.'],
             ['Rapat Koordinasi Perangkat Desa Bahas Program Kerja', 'Pemerintahan', 'Perangkat desa menyamakan langkah dalam pelaksanaan program kerja yang telah disepakati.'],
             ['Lomba Kebersihan Antar RT Meriahkan Lingkungan Desa', 'Kegiatan', 'Setiap RT berlomba menata lingkungan agar bersih, asri, dan nyaman bagi seluruh warga.'],
-            ['Dukungan Pendidikan bagi Pelajar Desa Mondokan', 'Pendidikan', 'Pemerintah desa mengajak warga turut mendukung pelajar agar dapat melanjutkan pendidikan.'],
+            ['Dukungan Pendidikan bagi Pelajar Desa Klepu', 'Pendidikan', 'Pemerintah desa mengajak warga turut mendukung pelajar agar dapat melanjutkan pendidikan.'],
         ];
 
         foreach ($items as $i => [$title, $category, $excerpt]) {

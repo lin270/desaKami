@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
         // Password otomatis di-hash oleh cast "hashed" pada model User.
         User::create([
             'name' => 'Administrator Desa',
-            'email' => 'admin@desamondokan.test',
+            'email' => 'admin@desaklepu.test',
             'password' => 'password',
             'role' => 'admin',
             'is_active' => true,
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Redaksi Desa',
-            'email' => 'editor@desamondokan.test',
+            'email' => 'editor@desaklepu.test',
             'password' => 'password',
             'role' => 'editor',
             'is_active' => true,

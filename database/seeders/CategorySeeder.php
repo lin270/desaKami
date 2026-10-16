@@ -11,7 +11,7 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             'Pemerintahan' => 'Kabar seputar penyelenggaraan pemerintahan desa.',
-            'Desa' => 'Informasi umum tentang Desa Mondokan.',
+            'Desa' => 'Informasi umum tentang Desa Klepu.',
             'Masyarakat' => 'Cerita dan kegiatan warga.',
             'Kegiatan' => 'Dokumentasi kegiatan di lingkungan desa.',
             'Pembangunan' => 'Perkembangan pembangunan dan infrastruktur desa.',

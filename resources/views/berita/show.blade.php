@@ -13,9 +13,14 @@
     <meta property="article:section" content="{{ $post->category->name }}">
 @endpush
 
+@php
+    $readTime = max(1, (int) ceil(str_word_count(strip_tags((string) $post->content)) / 200));
+    $shareUrl = $post->url;
+@endphp
+
 @section('content')
-    <div class="container layout artikel-layout">
-        <article class="artikel">
+    <div class="wide nw-article-wrap">
+        <article class="nw-article">
             @if ($preview)
                 <p class="preview-banner" role="status">Pratinjau: berita ini belum terbit dan hanya terlihat oleh admin.</p>
             @endif
@@ -28,35 +33,63 @@
                 </ol>
             </nav>
 
-            <a class="kategori" href="{{ $post->category->url }}">{{ $post->category->name }}</a>
-            <h1 class="artikel-judul">{{ $post->title }}</h1>
-
-            <p class="meta">
-                @if ($post->published_at)
-                    <time datetime="{{ $post->published_at->toIso8601String() }}">{{ $post->published_at->translatedFormat('l, j F Y') }}</time>
-                @else
-                    <span>Draft</span>
+            <header class="nw-art-head">
+                <a class="nw-kicker" href="{{ $post->category->url }}">{{ $post->category->name }}</a>
+                <h1>{{ $post->title }}</h1>
+                @if (filled($post->excerpt_text))
+                    <p class="nw-art-deck">{{ \Illuminate\Support\Str::limit($post->excerpt_text, 240) }}</p>
                 @endif
-                <span>Oleh {{ $post->author->name }}</span>
-                <span>{{ number_format($post->views, 0, ',', '.') }} dibaca</span>
-            </p>
 
-            <figure class="artikel-gambar">
+                <div class="nw-art-meta">
+                    <div class="nw-art-by">
+                        <span class="nw-avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr($post->author->name, 0, 1)) }}</span>
+                        <div>
+                            <b>{{ $post->author->name }}</b>
+                            <span>
+                                @if ($post->published_at)
+                                    <time datetime="{{ $post->published_at->toIso8601String() }}">{{ $post->published_at->translatedFormat('l, j F Y') }}</time>
+                                @else
+                                    Draft
+                                @endif
+                                &middot; {{ $readTime }} menit baca &middot; {{ number_format($post->views, 0, ',', '.') }} dibaca
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nw-share" aria-label="Bagikan berita">
+                        <span>Bagikan</span>
+                        <a href="https://wa.me/?text={{ urlencode($post->title.' '.$shareUrl) }}" target="_blank" rel="noopener">WhatsApp</a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}" target="_blank" rel="noopener">Facebook</a>
+                        <button type="button" data-copy="{{ $shareUrl }}">Salin tautan</button>
+                    </div>
+                </div>
+            </header>
+
+            <figure class="nw-art-photo">
                 <img src="{{ $post->thumbnail_url }}" alt="{{ $post->title }}" width="1200" height="675" fetchpriority="high">
             </figure>
 
-            <div class="prose">
+            <div class="prose nw-prose">
                 {!! $body !!}
             </div>
 
+            <footer class="nw-art-foot">
+                <a class="nw-kicker" href="{{ $post->category->url }}">Kategori: {{ $post->category->name }}</a>
+                <a class="link-arrow" href="{{ url('/berita') }}">Kembali ke semua berita</a>
+            </footer>
+
             @if ($related->isNotEmpty())
-                <section class="terkait" aria-label="Berita terkait">
-                    <x-section-title title="Berita Terkait" />
-                    <div class="grid-news">
-                        @foreach ($related as $item)
-                            <x-post-card :post="$item" />
-                        @endforeach
-                    </div>
+                <section class="nw-related" aria-label="Baca juga">
+                    <h2>Baca juga</h2>
+                    @foreach ($related as $item)
+                        <article class="nw-row nw-row-compact">
+                            <div class="nw-row-text">
+                                <a class="nw-kicker" href="{{ $item->category->url }}">{{ $item->category->name }}</a>
+                                <h3><a href="{{ $item->url }}">{{ $item->title }}</a></h3>
+                                <p class="nw-by"><time datetime="{{ $item->published_at->toDateString() }}">{{ $item->published_at->translatedFormat('j F Y') }}</time></p>
+                            </div>
+                            <a class="nw-row-img" href="{{ $item->url }}" tabindex="-1" aria-hidden="true"><img src="{{ $item->thumbnail_url }}" alt="" width="240" height="180" loading="lazy"></a>
+                        </article>
+                    @endforeach
                 </section>
             @endif
         </article>

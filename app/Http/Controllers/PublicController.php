@@ -9,6 +9,7 @@ use App\Models\GalleryImage;
 use App\Models\LostItem;
 use App\Models\Post;
 use App\Models\Potential;
+use App\Models\VillageLocation;
 use App\Models\VillageProfile;
 use App\Models\VillageStatistic;
 use Illuminate\Http\Request;
@@ -78,7 +79,22 @@ class PublicController extends Controller
         // Ringkasan APBDes tahun terbaru yang dipublikasikan
         $budget = Budget::published()->orderByDesc('year')->first();
 
+        // Foto hero: foto profil desa jika sudah diunggah. Jika belum, view memakai ilustrasi bawaan.
+        $heroImage = filled($profile->hero_image) ? $profile->hero_image_url : null;
+        $introPhoto = $heroImage ?? $galleryImages->first()?->image_url;
+        $secondPhoto = $galleryImages->skip(1)->first()?->image_url;
+
+        // Ringkasan peta: hanya lokasi yang sudah dipublikasikan admin
+        $mapLocations = VillageLocation::query()->where('is_published', true)->get(['category']);
+        $mapCount = $mapLocations->count();
+        $mapCategories = $mapLocations->pluck('category')->filter()->unique()->values();
+
         return view('home', compact(
+            'heroImage',
+            'introPhoto',
+            'secondPhoto',
+            'mapCount',
+            'mapCategories',
             'featured',
             'sideHeadlines',
             'latestPosts',
@@ -122,7 +138,7 @@ class PublicController extends Controller
     /** GET /informasi - informasi pelayanan untuk masyarakat. */
     public function information(): View
     {
-        // Persyaratan: TEKS CONTOH. Sesuaikan dengan ketentuan resmi Desa Mondokan.
+        // Persyaratan: TEKS CONTOH. Sesuaikan dengan ketentuan resmi Desa Klepu.
         $services = [
             ['Surat Keterangan Domisili', ['Fotokopi KTP dan Kartu Keluarga', 'Surat pengantar RT/RW', 'Pas foto sesuai kebutuhan']],
             ['Surat Pengantar KTP / KK', ['Surat pengantar RT/RW', 'Fotokopi dokumen pendukung (akta, KK lama, dsb.)', 'Mengisi formulir di kantor desa']],

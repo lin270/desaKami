@@ -1,18 +1,18 @@
-# Desa Mondokan - Panduan Pemasangan (semua tahap)
+# Desa Klepu - Panduan Pemasangan (semua tahap)
 
 Paket ini berisi SELURUH file aplikasi (tahap 2-7 + Potensi Desa, Barang Hilang & Ditemukan, APBDes). Timpa ke project Laravel 12 yang baru.
 
 ## A. Pemasangan dari nol (XAMPP / lokal)
-1. composer create-project laravel/laravel desa-mondokan
+1. composer create-project laravel/laravel desa-klepu
 2. Ekstrak zip ini ke folder project, pilih "timpa semua file".
-3. Buat database kosong `desa_mondokan` di phpMyAdmin, lalu edit `.env`:
-     APP_NAME="Desa Mondokan"
+3. Buat database kosong `desa_klepu` di phpMyAdmin, lalu edit `.env`:
+     APP_NAME="Desa Klepu"
      APP_URL=http://localhost:8000
      APP_LOCALE=id
      APP_FALLBACK_LOCALE=id
      APP_FAKER_LOCALE=id_ID
      DB_CONNECTION=mysql
-     DB_DATABASE=desa_mondokan
+     DB_DATABASE=desa_klepu
 4. config/app.php -> 'timezone' => 'Asia/Jakarta'
 5. php.ini XAMPP (lalu restart Apache):
      upload_max_filesize = 8M
@@ -24,8 +24,8 @@ Paket ini berisi SELURUH file aplikasi (tahap 2-7 + Potensi Desa, Barang Hilang 
 8. php artisan serve  ->  http://localhost:8000   |   admin: /admin/login
 
 Akun development (HANYA lokal, di production seeder ini otomatis dilewati):
-  admin@desamondokan.test  / password  (role admin)
-  editor@desamondokan.test / password  (role editor)
+  admin@desaklepu.test  / password  (role admin)
+  editor@desaklepu.test / password  (role editor)
 
 ## B. Hak akses
 - Admin  : semua menu.
@@ -83,7 +83,7 @@ Admin  : Potensi Desa, Barang Hilang (tombol "Tandai selesai"), APBDes (khusus a
 
 APBDes = satu file PDF per tahun. Admin: menu APBDes > "Unggah APBDes" > isi tahun (mis. 2026), pilih PDF (maks. 8 MB),
 status Terbit. Publik: /apbdes menampilkan daftar tahun, tiap tahun ada tombol "Unduh PDF"
-(file terunduh bernama APBDes-Desa-Mondokan-2026.pdf). Tahun terbaru juga tampil di beranda.
+(file terunduh bernama APBDes-Desa-Klepu-2026.pdf). Tahun terbaru juga tampil di beranda.
 Pastikan php artisan storage:link sudah dijalankan.
 
 Sudah punya database dari tahap sebelumnya (JANGAN migrate:fresh, data akan hilang):

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
+use App\Http\Controllers\Admin\AspirationController as AdminAspirationController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BudgetController as AdminBudgetController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Admin\VillageStatisticController;
 use App\Http\Controllers\Admin\VillageLocationController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ApbdesController;
+use App\Http\Controllers\AspirationController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LostItemController;
@@ -61,6 +63,9 @@ Route::get('/potensi/{potential:slug}', [PotentialController::class, 'show'])->n
 Route::get('/barang-hilang', [LostItemController::class, 'index'])->name('lost-items.index');
 Route::get('/barang-hilang/{lostItem:slug}', [LostItemController::class, 'show'])->name('lost-items.show');
 
+Route::get('/aspirasi', [AspirationController::class, 'index'])->name('aspirations.index');
+Route::post('/aspirasi', [AspirationController::class, 'store'])->middleware('throttle:5,10')->name('aspirations.store');
+
 Route::get('/apbdes', [ApbdesController::class, 'index'])->name('apbdes.index');
 Route::get('/apbdes/{year}/unduh', [ApbdesController::class, 'download'])->whereNumber('year')->name('apbdes.download');
 
@@ -87,6 +92,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::resource('announcements', AdminAnnouncementController::class)->except('show');
         Route::resource('events', AdminEventController::class)->except('show');
+
+        // Ruang Aspirasi: admin dan editor dapat membalas atau menghapus aspirasi yang melanggar ketentuan
+        Route::get('aspirations', [AdminAspirationController::class, 'index'])->name('aspirations.index');
+        Route::put('aspirations/{aspiration}/reply', [AdminAspirationController::class, 'reply'])->name('aspirations.reply');
+        Route::delete('aspirations/{aspiration}', [AdminAspirationController::class, 'destroy'])->name('aspirations.destroy');
 
         Route::resource('galleries', AdminGalleryController::class)->except('show');
         Route::delete('gallery-images/{image}', [GalleryImageController::class, 'destroy'])->name('gallery-images.destroy');

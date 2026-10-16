@@ -21,7 +21,7 @@ class LostItemSeeder extends Seeder
                 'type' => $type,
                 'title' => $title,
                 'description' => $description,
-                'location' => 'Desa Mondokan',
+                'location' => 'Desa Klepu',
                 'event_date' => now()->subDays($i + 1)->toDateString(),
                 'contact' => 'Kantor Desa',
                 'status' => 'published',

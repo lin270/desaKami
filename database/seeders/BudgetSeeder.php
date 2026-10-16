@@ -11,7 +11,7 @@ class BudgetSeeder extends Seeder
     {
         $budget = Budget::create([
             'year' => (int) date('Y'),
-            'title' => 'APBDes Desa Mondokan Tahun '.date('Y'),
+            'title' => 'APBDes Desa Klepu Tahun '.date('Y'),
             'notes' => 'ANGKA CONTOH - ganti dengan data APBDes resmi dari Perdes.',
             'status' => 'published',
         ]);

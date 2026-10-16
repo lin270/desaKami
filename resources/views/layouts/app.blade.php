@@ -11,21 +11,22 @@
     // [label, path|null, patterns|children]. path null = grup dropdown, children = [label, path, patterns].
     $menu = [
         ['Beranda', '/', ['/']],
-        ['Berita', '/berita', ['berita*', 'kategori*', 'search']],
-        ['Peta Desa', '/peta-desa', ['peta-desa*']],
-        ['Profil', null, [
+        ['Profil Desa', null, [
             ['Profil Desa', '/profil', ['profil*']],
             ['Pemerintahan', '/pemerintahan', ['pemerintahan*']],
             ['Potensi Desa', '/potensi', ['potensi*']],
         ]],
-        ['Informasi', null, [
+        ['Berita', '/berita', ['berita*', 'kategori*', 'search']],
+        ['Peta Desa', '/peta-desa', ['peta-desa*']],
+        ['Galeri', '/galeri', ['galeri*']],
+        ['Layanan', null, [
             ['Informasi Layanan', '/informasi', ['informasi*']],
             ['Pengumuman', '/pengumuman', ['pengumuman*']],
             ['Kalender Warga', '/agenda', ['agenda*']],
+            ['Ruang Aspirasi', '/aspirasi', ['aspirasi*']],
             ['Barang Hilang & Ditemukan', '/barang-hilang', ['barang-hilang*']],
+            ['Transparansi APBDes', '/apbdes', ['apbdes*']],
         ]],
-        ['APBDes', '/apbdes', ['apbdes*']],
-        ['Galeri', '/galeri', ['galeri*']],
     ];
 
     $isActive = fn (array $patterns) => request()->is(...array_map(fn ($p) => ltrim($p, '/') ?: '/', $patterns));
@@ -58,64 +59,29 @@
     <meta name="twitter:title" content="{{ $pageTitle !== '' ? $pageTitle : $fullTitle }}">
     <meta name="twitter:description" content="{{ $pageDesc }}">
 
+    <meta name="theme-color" content="#293B30">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     @stack('head')
 </head>
-<body>
+<body @class(['has-hero' => $__env->hasSection('hero'), trim($__env->yieldContent('body_class'))])>
     <a class="skip-link" href="#konten">Lewati ke konten</a>
 
-    <div class="topbar">
-        <div class="container topbar-inner">
-            <span>{{ now()->translatedFormat('l, j F Y') }}</span>
-            @if (!empty($site['phone']))
-                <span class="hide-sm">Hubungi kami: {{ $site['phone'] }}</span>
-            @endif
-        </div>
-    </div>
-
-    <header class="site-header">
-        <div class="container header-main">
-            <a href="{{ url('/') }}" class="brand" aria-label="{{ $site['site_name'] }} - Beranda">
+    <header class="kl-header" id="site-header">
+        <div class="wide kl-bar">
+            <a href="{{ url('/') }}" class="kl-brand" aria-label="{{ $site['site_name'] }} - Beranda">
                 @if ($logoUrl)
-                    <img class="brand-logo" src="{{ $logoUrl }}" alt="Logo {{ $site['site_name'] }}" width="48" height="48">
+                    <img class="kl-brand-logo" src="{{ $logoUrl }}" alt="" width="42" height="42">
                 @else
-                    <span class="brand-mark" aria-hidden="true">M</span>
+                    @include('partials.logo-mark')
                 @endif
-                <span class="brand-text">
-                    <span class="brand-name">{{ $site['site_name'] }}</span>
-                    <span class="brand-tagline">{{ $site['site_tagline'] }}</span>
+                <span class="kl-brand-text">
+                    <span class="kl-brand-name">{{ $site['site_name'] }}</span>
+                    <span class="kl-brand-sub">Portal Informasi Desa</span>
                 </span>
             </a>
 
-            <div class="header-actions">
-                <button type="button" class="icon-btn" id="search-toggle" aria-label="Cari berita" aria-expanded="false" aria-controls="search-panel">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-                </button>
-
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="btn-login">Dashboard</a>
-                @else
-                    <a href="{{ route('admin.login') }}" class="btn-login"><span class="hide-xs">Login </span>Admin</a>
-                @endauth
-
-                <button type="button" class="icon-btn nav-toggle" id="nav-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="main-nav">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-                </button>
-            </div>
-        </div>
-
-        <div class="search-panel" id="search-panel" hidden>
-            <div class="container">
-                <form action="{{ url('/search') }}" method="GET" role="search" class="search-form">
-                    <label for="q" class="visually-hidden">Cari berita</label>
-                    <input type="search" id="q" name="q" placeholder="Cari berita desa..." value="{{ request('q') }}" required minlength="2" maxlength="100">
-                    <button type="submit" class="btn">Cari</button>
-                </form>
-            </div>
-        </div>
-
-        <nav class="main-nav" id="main-nav" aria-label="Menu utama">
-            <div class="container">
+            <nav class="kl-nav" id="main-nav" aria-label="Menu utama">
                 <ul>
                     @foreach ($menu as [$label, $path, $extra])
                         @if ($path === null)
@@ -123,71 +89,115 @@
                                 <button type="button" class="nav-drop" aria-expanded="false" aria-haspopup="true">{{ $label }}<span class="caret" aria-hidden="true"></span></button>
                                 <ul class="sub-nav">
                                     @foreach ($extra as [$childLabel, $childPath, $childPatterns])
-                                        <li><a href="{{ url($childPath) }}" @class(['active' => $isActive($childPatterns)])>{{ $childLabel }}</a></li>
+                                        <li><a href="{{ url($childPath) }}" @class(['active' => $isActive($childPatterns)]) @if ($isActive($childPatterns)) aria-current="page" @endif>{{ $childLabel }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
                         @else
-                            <li>
-                                <a href="{{ url($path) }}" @class(['active' => $isActive($extra)])>{{ $label }}</a>
-                            </li>
+                            <li><a href="{{ url($path) }}" @class(['active' => $isActive($extra)]) @if ($isActive($extra)) aria-current="page" @endif>{{ $label }}</a></li>
                         @endif
                     @endforeach
+                    <li>
+                        @auth
+                            <a class="kl-login-m" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                        @else
+                            <a class="kl-login-m" href="{{ route('admin.login') }}">Login Admin</a>
+                        @endauth
+                    </li>
                 </ul>
+            </nav>
+
+            <div class="kl-actions">
+                <button type="button" class="kl-icon-btn" id="search-toggle" aria-label="Cari berita" aria-expanded="false" aria-controls="search-panel">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                </button>
+                @auth
+                    <a href="{{ route('admin.dashboard') }}" class="kl-login">Dashboard</a>
+                @else
+                    <a href="{{ route('admin.login') }}" class="kl-login">Login Admin</a>
+                @endauth
+                <button type="button" class="kl-icon-btn nav-toggle" id="nav-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="main-nav">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                </button>
             </div>
-        </nav>
+        </div>
+
+        <div class="kl-search" id="search-panel" hidden>
+            <div class="wide">
+                <form action="{{ url('/search') }}" method="GET" role="search" class="search-form">
+                    <label for="q" class="visually-hidden">Cari berita</label>
+                    <input type="search" id="q" name="q" placeholder="Cari berita desa..." value="{{ request('q') }}" required minlength="2" maxlength="100">
+                    <button type="submit" class="btn">Cari</button>
+                </form>
+            </div>
+        </div>
     </header>
 
     <main id="konten">
+        @hasSection('hero')
+            @yield('hero')
+        @endif
         @yield('content')
     </main>
 
-    <footer class="site-footer">
-        <div class="container footer-grid">
+    <footer class="kl-footer">
+        <div class="wide kl-footer-top">
             <div>
-                <h2 class="footer-brand">{{ $site['site_name'] }}</h2>
+                <p class="kl-footer-word">{{ \Illuminate\Support\Str::title(mb_strtolower($site['site_name'])) }}<em>.</em></p>
                 <p>{{ $site['site_tagline'] }}</p>
                 @if (!empty($site['address']))
                     <p>{{ $site['address'] }}</p>
                 @endif
             </div>
 
-            <div>
-                <h3>Navigasi</h3>
-                <ul>
-                    @foreach ($flatMenu as [$label, $path])
-                        <li><a href="{{ url($path) }}">{{ $label }}</a></li>
-                    @endforeach
-                </ul>
-            </div>
-
-            <div>
-                <h3>Kontak</h3>
-                <ul>
-                    @if (!empty($site['phone']))<li>Telepon: {{ $site['phone'] }}</li>@endif
-                    @if (!empty($site['email']))<li>Email: <a href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a></li>@endif
-                    @if (!empty($site['services_hours']))<li>Jam pelayanan: {{ $site['services_hours'] }}</li>@endif
-                </ul>
-            </div>
-
-            <div>
-                <h3>Sosial Media</h3>
-                @if (!empty($site['facebook']) || !empty($site['instagram']) || !empty($site['youtube']))
+            <div class="kl-footer-cols">
+                <div>
+                    <h3>Jelajahi</h3>
                     <ul>
-                        @if (!empty($site['facebook']))<li><a href="{{ $site['facebook'] }}" rel="noopener" target="_blank">Facebook</a></li>@endif
-                        @if (!empty($site['instagram']))<li><a href="{{ $site['instagram'] }}" rel="noopener" target="_blank">Instagram</a></li>@endif
-                        @if (!empty($site['youtube']))<li><a href="{{ $site['youtube'] }}" rel="noopener" target="_blank">YouTube</a></li>@endif
+                        <li><a href="{{ url('/profil') }}">Profil Desa</a></li>
+                        <li><a href="{{ url('/pemerintahan') }}">Pemerintahan</a></li>
+                        <li><a href="{{ url('/potensi') }}">Potensi Desa</a></li>
+                        <li><a href="{{ url('/berita') }}">Berita</a></li>
+                        <li><a href="{{ url('/peta-desa') }}">Peta Desa</a></li>
+                        <li><a href="{{ url('/galeri') }}">Galeri</a></li>
                     </ul>
-                @else
-                    <p class="muted">Belum ada akun sosial media. Isi di menu Pengaturan admin.</p>
-                @endif
+                </div>
+                <div>
+                    <h3>Layanan</h3>
+                    <ul>
+                        <li><a href="{{ url('/informasi') }}">Informasi Layanan</a></li>
+                        <li><a href="{{ url('/pengumuman') }}">Pengumuman</a></li>
+                        <li><a href="{{ url('/agenda') }}">Kalender Warga</a></li>
+                        <li><a href="{{ url('/aspirasi') }}">Ruang Aspirasi</a></li>
+                        <li><a href="{{ url('/barang-hilang') }}">Barang Hilang &amp; Ditemukan</a></li>
+                        <li><a href="{{ url('/apbdes') }}">Transparansi APBDes</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Kontak</h3>
+                    @php($hasContact = !empty($site['phone']) || !empty($site['email']) || !empty($site['services_hours']))
+                    @if ($hasContact)
+                        <ul>
+                            @if (!empty($site['phone']))<li>Telepon: {{ $site['phone'] }}</li>@endif
+                            @if (!empty($site['email']))<li><a href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a></li>@endif
+                            @if (!empty($site['services_hours']))<li>Jam pelayanan: {{ $site['services_hours'] }}</li>@endif
+                        </ul>
+                    @else
+                        <p class="muted">Informasi kontak belum diisi pengelola.</p>
+                    @endif
+                    @if (!empty($site['facebook']) || !empty($site['instagram']) || !empty($site['youtube']))
+                        <ul>
+                            @if (!empty($site['facebook']))<li><a href="{{ $site['facebook'] }}" rel="noopener" target="_blank">Facebook</a></li>@endif
+                            @if (!empty($site['instagram']))<li><a href="{{ $site['instagram'] }}" rel="noopener" target="_blank">Instagram</a></li>@endif
+                            @if (!empty($site['youtube']))<li><a href="{{ $site['youtube'] }}" rel="noopener" target="_blank">YouTube</a></li>@endif
+                        </ul>
+                    @endif
+                </div>
             </div>
         </div>
 
-        <div class="footer-bottom">
-            <div class="container">
-                &copy; {{ date('Y') }} {{ $site['site_name'] }}. Hak cipta dilindungi.
-            </div>
+        <div class="kl-footer-bottom">
+            <div class="wide">&copy; {{ date('Y') }} {{ $site['site_name'] }}. Hak cipta dilindungi.</div>
         </div>
     </footer>
 

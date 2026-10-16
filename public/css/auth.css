@@ -1,0 +1,37 @@
+/* Desa Klepu - halaman login */
+:root { --hijau:#293B30; --hijau-gelap:#1d2b22; --zaitun:#414A38; --emas:#D5C7AA; --krem:#F5F1E8; --teks:#292B27; --abu:#5b6354; --garis:#ddd5c1; --merah:#a32a22; --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif; --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; }
+* { box-sizing: border-box; }
+body { margin:0; min-height:100vh; background:var(--krem); color:var(--teks); font-family:var(--sans); line-height:1.5; }
+a { color:inherit; }
+:focus-visible { outline:2px solid var(--zaitun); outline-offset:2px; }
+.auth { min-height:100vh; display:grid; grid-template-rows:auto 1fr; }
+.auth-art { position:relative; min-height:200px; background:var(--hijau-gelap); color:#fff; overflow:hidden; isolation:isolate; display:flex; align-items:flex-end; }
+.auth-art .scene, .auth-art .scene svg { position:absolute; inset:0; width:100%; height:100%; z-index:-1; display:block; }
+.auth-art::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(20,30,24,.25),rgba(20,30,24,.85)); }
+.auth-art-inner { padding:1.5rem; }
+.auth-art .kl-mark { width:44px; height:44px; color:var(--emas); margin-bottom:.8rem; }
+.auth-art h2 { margin:0 0 .4rem; font-family:var(--serif); font-weight:500; font-size:clamp(1.6rem,4vw,2.6rem); line-height:1.1; letter-spacing:-.02em; }
+.auth-art p { margin:0; max-width:34ch; font-size:.95rem; color:rgba(255,255,255,.85); }
+.auth-panel { display:flex; align-items:center; justify-content:center; padding:2rem 1.25rem; }
+.auth-card { width:100%; max-width:400px; }
+.auth-eyebrow { margin:0 0 .5rem; font-size:.7rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:#6f6140; }
+.auth-card h1 { margin:0 0 .4rem; font-family:var(--serif); font-weight:500; font-size:2rem; letter-spacing:-.02em; color:var(--hijau); }
+.auth-card .sub { margin:0 0 1.75rem; color:var(--abu); font-size:.95rem; }
+label { display:block; font-size:.85rem; font-weight:600; margin:1.1rem 0 .35rem; }
+.field { position:relative; }
+input[type=email], input[type=password], input[type=text] { width:100%; min-height:46px; padding:.65rem .8rem; border:1px solid #cbc4ae; border-radius:2px; background:#fff; font:inherit; color:var(--teks); }
+input:focus { outline:2px solid var(--zaitun); outline-offset:0; border-color:var(--zaitun); }
+.field input[type=password], .field input[data-pw] { padding-right:4.6rem; }
+.pw-toggle { position:absolute; right:.35rem; top:50%; transform:translateY(-50%); padding:.35rem .6rem; background:none; border:0; font:inherit; font-size:.78rem; font-weight:700; color:var(--hijau); cursor:pointer; }
+.ingat { display:flex; align-items:center; gap:.55rem; margin:1.1rem 0 1.4rem; font-size:.88rem; font-weight:400; }
+.ingat input { width:1.05rem; height:1.05rem; accent-color:var(--hijau); }
+.submit { width:100%; min-height:48px; background:var(--hijau); color:#fff; border:1px solid var(--hijau); border-radius:2px; font:inherit; font-weight:600; letter-spacing:.03em; cursor:pointer; transition:background .2s; }
+.submit:hover { background:var(--zaitun); }
+.error { background:#fbeceb; border:1px solid #efc1bd; border-left:4px solid var(--merah); color:var(--merah); padding:.7rem .85rem; font-size:.88rem; margin-bottom:.5rem; }
+.kembali { display:inline-block; margin-top:1.5rem; font-size:.88rem; color:var(--abu); text-decoration:none; border-bottom:1px solid var(--emas); }
+.kembali:hover { color:var(--hijau); }
+@media (min-width:900px) {
+    .auth { grid-template-columns:1.1fr 1fr; grid-template-rows:1fr; }
+    .auth-art { min-height:100vh; }
+    .auth-art-inner { padding:3rem; }
+}

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\VillageLocation;
+use App\Support\Media;
+use App\Support\Rules;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -12,10 +14,10 @@ class VillageLocationController extends Controller
 {
     public function index(): View { $locations = VillageLocation::orderBy('name')->paginate(15); return view('admin.village-locations.index', compact('locations')); }
     public function create(): View { $location = new VillageLocation(['is_published' => true]); return view('admin.village-locations.form', compact('location')); }
-    public function store(Request $request): RedirectResponse { VillageLocation::create($this->validated($request)); return redirect()->route('admin.village-locations.index')->with('success', 'Lokasi berhasil ditambahkan.'); }
+    public function store(Request $request): RedirectResponse { VillageLocation::create($this->withImage($request, $this->validated($request))); return redirect()->route('admin.village-locations.index')->with('success', 'Lokasi berhasil ditambahkan.'); }
     public function edit(VillageLocation $village_location): View { $location = $village_location; return view('admin.village-locations.form', compact('location')); }
-    public function update(Request $request, VillageLocation $village_location): RedirectResponse { $village_location->update($this->validated($request)); return redirect()->route('admin.village-locations.index')->with('success', 'Lokasi berhasil diperbarui.'); }
-    public function destroy(VillageLocation $village_location): RedirectResponse { $village_location->delete(); return redirect()->route('admin.village-locations.index')->with('success', 'Lokasi dihapus.'); }
+    public function update(Request $request, VillageLocation $village_location): RedirectResponse { $village_location->update($this->withImage($request, $this->validated($request), $village_location)); return redirect()->route('admin.village-locations.index')->with('success', 'Lokasi berhasil diperbarui.'); }
+    public function destroy(VillageLocation $village_location): RedirectResponse { Media::delete($village_location->image); $village_location->delete(); return redirect()->route('admin.village-locations.index')->with('success', 'Lokasi dihapus.'); }
     
 private function validated(Request $request): array
 {
@@ -27,12 +29,36 @@ private function validated(Request $request): array
         'latitude' => ['required', 'numeric', 'between:-90,90'],
         'longitude' => ['required', 'numeric', 'between:-180,180'],
         'is_published' => ['nullable', 'boolean'],
+        'image' => Rules::image(),
+        'remove_image' => ['nullable', 'boolean'],
     ], [], [
         'name' => 'nama lokasi',
         'category' => 'kategori',
         'latitude' => 'latitude',
         'longitude' => 'longitude',
+        'image' => 'foto lokasi',
     ]);
+
+    return $data;
+}
+
+/** Simpan foto baru / hapus foto lama bila diminta. Foto lama dihapus hanya setelah penggantinya tersimpan. */
+private function withImage(Request $request, array $data, ?VillageLocation $location = null): array
+{
+    $remove = (bool) ($data['remove_image'] ?? false);
+    unset($data['image'], $data['remove_image']);
+    // Checkbox yang tidak dicentang tidak terkirim: anggap tidak ditayangkan
+    $data['is_published'] = $request->boolean('is_published');
+
+    if ($request->hasFile('image')) {
+        $data['image'] = Media::storeImage($request->file('image'), 'locations');
+        if ($location) {
+            Media::delete($location->image);
+        }
+    } elseif ($remove && $location) {
+        Media::delete($location->image);
+        $data['image'] = null;
+    }
 
     return $data;
 }

@@ -10,7 +10,14 @@
     <div class="stat-grid">
         <div class="stat-card"><b>{{ number_format($totalPosts, 0, ',', '.') }}</b><span>Berita @if ($totalDrafts) ({{ $totalDrafts }} draft)@endif</span></div>
         <div class="stat-card"><b>{{ number_format($totalAnnouncements, 0, ',', '.') }}</b><span>Pengumuman</span></div>
-        <div class="stat-card"><b>{{ number_format($totalEvents, 0, ',', '.') }}</b><span>Agenda</span></div>
+        <div class="stat-card"><b>{{ number_format($totalEvents, 0, ',', '.') }}</b><span>Agenda @if ($upcomingEvents) ({{ $upcomingEvents }} mendatang)@endif</span></div>
+        @if ($totalLocations !== null)
+            <div class="stat-card"><b>{{ number_format($totalLocations, 0, ',', '.') }}</b><span>Lokasi peta</span></div>
+        @endif
+        @if ($pendingAspirations !== null)
+            <div class="stat-card"><b>{{ number_format($pendingAspirations, 0, ',', '.') }}</b><span>Aspirasi belum dibalas</span></div>
+        @endif
+        <div class="stat-card"><b>{{ number_format($activeLostItems, 0, ',', '.') }}</b><span>Laporan barang aktif</span></div>
         <div class="stat-card"><b>{{ number_format($totalGalleries, 0, ',', '.') }}</b><span>Album galeri</span></div>
         <div class="stat-card"><b>{{ number_format($totalViews, 0, ',', '.') }}</b><span>Total views berita</span></div>
     </div>

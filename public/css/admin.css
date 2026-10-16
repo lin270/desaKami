@@ -1,12 +1,13 @@
 /* ==========================================================================
-   Desa Mondokan - panel admin. Ringan, sederhana, tanpa library.
+   Desa Klepu - panel admin. Ringan, sederhana, tanpa library.
    ========================================================================== */
 :root {
-    --hijau: #1f5d3a; --hijau-gelap: #174a2e; --hijau-muda: #e8f0ea;
-    --emas: #c8962e; --bg: #f4f3ee; --putih: #fff; --teks: #1b1f1d; --abu: #5f6762;
-    --garis: #e2ded2; --merah: #b3261e; --merah-muda: #fdecea; --ok-muda: #e6f2ea;
+    --hijau: #293B30; --hijau-gelap: #1d2b22; --zaitun: #414A38; --hijau-muda: #e9e7da;
+    --emas: #D5C7AA; --bg: #F5F1E8; --putih: #fff; --teks: #292B27; --abu: #5b6354; --sage: #87907B;
+    --garis: #ddd5c1; --merah: #a32a22; --merah-muda: #fbeceb; --ok-muda: #e8eedf;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --radius: 6px; --side: 240px;
+    --radius: 2px; --side: 248px; --side-mini: 68px;
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -18,7 +19,7 @@ h1, h2, h3 { margin: 0 0 .5rem; line-height: 1.25; }
 p { margin: 0 0 1rem; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 button, input, select, textarea { font: inherit; }
-:focus-visible { outline: 2px solid var(--emas); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--zaitun); outline-offset: 2px; }
 
 /* ---------- Shell ---------- */
 .shell { min-height: 100vh; }
@@ -169,3 +170,91 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: .9rem; }
 .content { min-width: 0; }
 @media print { .side, .top, .page-actions, .form-actions { display: none !important; } .main { margin: 0; } }
 .sub-h { font-size: 1.05rem; margin: 1.6rem 0 .6rem; }
+
+/* ==========================================================================
+   Desa Klepu - penyesuaian panel admin (tenang, efisien, senada dengan situs)
+   ========================================================================== */
+h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; }
+a { color: var(--hijau); }
+.side { background: var(--hijau-gelap); transition: transform .25s ease, width .25s ease; }
+.side-brand { gap: .65rem; padding: 1.15rem 1.1rem; }
+.side-brand .kl-mark { flex: none; width: 36px; height: 36px; color: var(--emas); }
+.side-brand strong { font-family: var(--serif); font-weight: 600; letter-spacing: .06em; }
+.side-brand small { letter-spacing: .14em; text-transform: uppercase; font-size: .62rem; color: #a9b3a0; }
+.side-group { margin: 1rem 0 .3rem; padding: 0 1.2rem; font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: #8e9a85; }
+.side nav { padding: .25rem 0 .75rem; }
+.side nav a { display: flex; align-items: center; gap: .7rem; padding: .55rem 1.2rem; color: #d6dccf; font-size: .9rem; border-left: 2px solid transparent; }
+.side nav a:hover { background: rgba(213,199,170,.08); }
+.side nav a.active { background: rgba(213,199,170,.14); border-left-color: var(--emas); font-weight: 600; }
+.side-dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+.side nav a.active .side-dot { background: var(--emas); }
+.side-site { color: #a9b3a0; }
+
+.top { background: var(--bg); border-bottom: 1px solid var(--garis); padding: .55rem 1rem; }
+.top-title { font-weight: 400; }
+.crumb { display: flex; align-items: center; gap: .5rem; font-size: .86rem; color: var(--abu); min-width: 0; }
+.crumb a { color: var(--abu); }
+.crumb span:last-child { color: var(--teks); font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.side-toggle, .side-collapse { display: grid; place-items: center; width: 38px; height: 38px; background: transparent; border: 1px solid var(--garis); border-radius: var(--radius); cursor: pointer; color: var(--teks); }
+.side-collapse { display: none; }
+.side-collapse svg { transition: transform .25s; }
+.top-name em { border-radius: 0; background: var(--hijau); color: var(--emas); }
+
+.content { max-width: 1180px; padding: 1.25rem 1rem 3rem; }
+.page-title { padding-bottom: 1rem; border-bottom: 1px solid var(--garis); margin-bottom: 1.5rem; }
+.page-title h1 { font-size: 1.9rem; }
+
+.btn { background: var(--hijau); border-color: var(--hijau); font-weight: 600; letter-spacing: .01em; transition: background .2s, color .2s; }
+.btn:hover { background: var(--zaitun); border-color: var(--zaitun); }
+.btn-ghost { background: var(--putih); }
+.btn-ghost:hover { background: var(--hijau-muda); color: var(--teks); border-color: var(--hijau-muda); }
+.btn-danger:hover { color: var(--merah); }
+.card, .tbl-wrap, .form-card, .stat-card, .foto-item { border-radius: var(--radius); box-shadow: none; }
+.card h2 { font-size: 1.25rem; }
+.stat-card { border-left: 0; border-top: 3px solid var(--hijau); background: var(--putih); }
+.stat-card b { font-family: var(--serif); font-weight: 500; font-size: 2rem; }
+.badge { border-radius: 0; }
+.badge-warn { background: #f3ecd8; color: #6f6140; border-color: #ddd0ac; }
+.tbl th { background: var(--hijau-muda); color: var(--zaitun); }
+.tbl tbody tr:hover td { background: #faf7ef; }
+.alert { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; border-radius: var(--radius); }
+.alert-ok { border-color: #c3cdb2; border-left: 4px solid var(--hijau); }
+.alert-err { border-left: 4px solid var(--merah); }
+.alert .x { background: none; border: 0; font-size: 1.2rem; line-height: 1; cursor: pointer; color: inherit; opacity: .6; }
+.alert .x:hover { opacity: 1; }
+.fg input[type=text], .fg input[type=email], .fg input[type=password], .fg input[type=number], .fg input[type=date], .fg input[type=time], .fg input[type=datetime-local], .fg select, .fg textarea { border-color: #cbc4ae; min-height: 42px; }
+.fg input:focus, .fg select:focus, .fg textarea:focus, .filter input:focus, .filter select:focus { outline: 2px solid var(--zaitun); outline-offset: 0; border-color: var(--zaitun); }
+.foto-item.cover { border-color: var(--hijau); box-shadow: 0 0 0 2px rgba(41,59,48,.3); }
+
+/* Tabel di layar kecil: bisa digeser, dengan penanda tepi */
+.tbl-wrap { background: linear-gradient(90deg, var(--putih) 30%, transparent) left / 24px 100% no-repeat local, linear-gradient(270deg, var(--putih) 30%, transparent) right / 24px 100% no-repeat local, linear-gradient(90deg, rgba(41,59,48,.14), transparent) left / 10px 100% no-repeat scroll, linear-gradient(270deg, rgba(41,59,48,.14), transparent) right / 10px 100% no-repeat scroll, var(--putih); -webkit-overflow-scrolling: touch; }
+.filter input, .filter select { min-height: 40px; }
+
+@media (min-width: 960px) {
+    .side-collapse { display: grid; }
+    .content { padding: 1.75rem 2rem 4rem; }
+    .side-collapsed { --side: var(--side-mini); }
+    .side-collapsed .side-brand-text, .side-collapsed .side-label, .side-collapsed .side-group { display: none; }
+    .side-collapsed .side-brand { justify-content: center; padding-inline: 0; }
+    .side-collapsed .side nav a { justify-content: center; padding-inline: 0; }
+    .side-collapsed .side-dot { width: 9px; height: 9px; }
+    .side-collapsed .side-site { text-align: center; padding-inline: 0; }
+    .side-collapsed .side-site::before { content: "\2197"; }
+    .side-collapsed .side-collapse svg { transform: rotate(180deg); }
+}
+@media (max-width: 959px) { .side { width: min(86vw, 300px); } }
+@media (prefers-reduced-motion: reduce) { .side, .side-collapse svg { transition: none; } }
+
+/* Aspirasi warga */
+.asp-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1rem; margin: 1rem 0 1.2rem; }
+.asp-tabs { display: flex; flex-wrap: wrap; gap: .4rem; }
+.asp-tabs a { padding: .4rem .85rem; border: 1px solid var(--garis); background: var(--putih); font-size: .84rem; color: var(--teks); text-decoration: none; }
+.asp-tabs a.active { background: var(--hijau); border-color: var(--hijau); color: #fff; }
+.asp-item { margin-bottom: 1rem; }
+.asp-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+.asp-msg { margin: 0 0 1rem; padding: .8rem 1rem; background: #f7f1df; border-left: 4px solid var(--emas); white-space: pre-line; overflow-wrap: anywhere; line-height: 1.6; }
+.asp-reply label { display: block; margin-bottom: .3rem; font-weight: 700; font-size: .85rem; }
+.asp-reply textarea { width: 100%; padding: .6rem .7rem; border: 1px solid #cbc4ae; font: inherit; border-radius: var(--radius); }
+.asp-actions { margin-top: .6rem; }
+.asp-del { margin-top: .8rem; padding-top: .8rem; border-top: 1px solid var(--garis); }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
